@@ -35,8 +35,13 @@ Quote from [https://openai.com/index/thinking-with-images/](https://openai.com/i
 - We introduce ***DeepEyesV2***, an agentic multimodal model that unifies code execution and web search within a single reasoning loop, enabling reliable and complex reasoning. 
 - We construct a carefully curated training corpus through rigorous
 data filtering and cleaning to build both cold-start SFT data and RL data that complement each other.
+![](assets/train_data.png)
+
 - Extensive experiments across real-world understanding, mathematical reasoning, and search-intensive benchmarks demonstrate the strong reasoning and tool-usage ability of DeepEyesV2.
+![](assets/result.png)
+
 - We analyze the dynamics of tool-use behavior in DeepEyesV2, revealing task-adaptive patterns. Besides, we also find reinforcement learning can enable more complex tool combinations and adaptive, context-aware tool invocation.
+![](assets/dynamic.png)
 
 
 
