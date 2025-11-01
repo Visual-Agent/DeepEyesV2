@@ -1,0 +1,13 @@
+pip install evaluate==0.4.3
+pip install vllm==0.8.2
+pip install pynvml==12.0.0
+pip install mathruler==0.1.0
+pip install pydantic==2.11.4
+pip install openai==1.79.0
+pip install tensordict==0.6.2
+pip install triton==3.1.0
+pip install qwen_vl_utils==0.0.11
+pip install math_verify==0.7.0
+pip install transformers==4.51.3
+pip install eas_prediction
+pip install autopep8
