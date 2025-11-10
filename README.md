@@ -144,7 +144,7 @@ Please see [evaluation](./evaluation/VLMEvalKit/README.md) for more details.
 
 ## Star Chart
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Visual-Agent/DeepEyes&type=Date)](https://star-history.com/#Visual-Agent/DeepEyesV2&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Visual-Agent/DeepEyesV2&type=Date)](https://star-history.com/#Visual-Agent/DeepEyesV2&Date)
 
 ## Licence
 
