@@ -2,6 +2,7 @@
 
 You should organize your data according to the following structure.
 
+```
 data/
 ├── sft/
 │   ├── images.zip
@@ -24,6 +25,7 @@ data/
     └── cached_images
         └── train.zip
 
+```
 
 
 ### Cold Start Data
