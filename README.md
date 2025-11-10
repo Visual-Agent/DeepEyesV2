@@ -4,7 +4,7 @@
 
   <br>
 
-  <a href="https://arxiv.org/abs/2505.14362">
+  <a href="https://arxiv.org/abs/2511.05271">
     <img src="https://img.shields.io/badge/ArXiv-DeepEyes-brown?logo=arxiv" alt="Paper">
   </a>
   <a href="https://huggingface.co/datasets/honglyhly/DeepEyesV2_SFT">
@@ -144,7 +144,7 @@ Please see [evaluation](./evaluation/VLMEvalKit/README.md) for more details.
 
 ## Star Chart
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Visual-Agent/DeepEyes&type=Date)](https://star-history.com/#Visual-Agent/DeepEyes&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Visual-Agent/DeepEyes&type=Date)](https://star-history.com/#Visual-Agent/DeepEyesV2&Date)
 
 ## Licence
 
@@ -153,13 +153,10 @@ This project is released under [Apache licence](./LICENSE).
 ## Citation
 
 ```
-@article{zheng2025deepeyesincentivizingthinkingimages,
-    title={DeepEyes: Incentivizing "Thinking with Images" via Reinforcement Learning}, 
-    author={Ziwei Zheng, Michael Yang, Jack Hong, Chenxiao Zhao, Guohai Xu, Le Yang, Chao Shen, Xing Yu},
-    year={2025},
-    eprint={2505.14362},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV},
-    url={https://arxiv.org/abs/2505.14362}, 
+@article{hong2025deepeyesv2,
+  title={DeepEyesV2: Toward Agentic Multimodal Model},
+  author={Jack Hong, Chenxiao Zhao, ChengLin Zhu, Weiheng Lu, Guohai Xu and Xing Yu},
+  journal={arXiv preprint arXiv:2511.05271},
+  year={2025}
 }
 ```
