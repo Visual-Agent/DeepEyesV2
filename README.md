@@ -13,8 +13,11 @@
   <a href="https://huggingface.co/datasets/honglyhly/DeepEyesV2_RL">
     <img src="https://img.shields.io/badge/🤗 huggingface-RL Data-blue" alt="rl dataset">
   </a>
+  <a href="https://huggingface.co/honglyhly/DeepEyesV2_7B_SFT_1031">
+    <img src="https://img.shields.io/badge/🤗 huggingface-SFT Model-purple" alt="checkpoint">
+  </a>
   <a href="https://huggingface.co/honglyhly/DeepEyesV2_7B_1031">
-    <img src="https://img.shields.io/badge/🤗 huggingface-Model-purple" alt="checkpoint">
+    <img src="https://img.shields.io/badge/🤗 huggingface-RL Model-purple" alt="checkpoint">
   </a>
   <a href="https://visual-agent.github.io/">
     <img src="https://img.shields.io/badge/-HomePage-black?logo=github" alt="homepage">
@@ -22,6 +25,9 @@
 </div>
 
 *\* Logo inspired by oracle bone character "eye".*
+
+## 🔥 Updates
+- [2025/11/14] Since the training time of cold start is relatively long, we have uploaded the cold-start checkpoint. You can download it from [here](https://huggingface.co/honglyhly/DeepEyesV2_7B_SFT_1031).
 
 
 ## DeepEyesV2
@@ -85,11 +91,11 @@ bash scripts/install_deepeyes.sh
 #### Code Sandbox
 DeepEyesV2 can write code, execute it in a sandbox, and perform subsequent reasoning based on the execution results. Similar to o3, DeepEyesV2' code follows the Jupyter style. We receive DeepEyesV2's code via a server and return the execution results.
 
-You can follow this [repo](https://github.com/ChenShawn/jupyter_sandbox) to deploy the code server. We utilize Redis to store the state of Jupyter Notebook, and you need to install Redis yourself.
+You can follow this [repo](https://github.com/Visual-Agent/jupyter_sandbox) to deploy the code server. We utilize Redis to store the state of Jupyter Notebook, and you need to install Redis yourself.
 
 During RL training, transmitting a large number of high-resolution images to a single node in a short period may saturate the bandwidth, leading to retransmissions and timeouts. Therefore, we recommend deploying multiple code servers to distribute network pressure and using high-performance machines to run the code servers, ensuring fast response. 
 
-In our practice, we deployed a large number of code server services on each GPU node separately, and you can refer to this [repo](https://github.com/ChenShawn/jupyter_sandbox) for deployment. Through this approach, no timeouts caused by network, CPU, or other hardware issues occurred during our training process.
+In our practice, we deployed a large number of code server services on each GPU node separately, and you can refer to this [repo](https://github.com/Visual-Agent/jupyter_sandbox) for deployment. Through this approach, no timeouts caused by network, CPU, or other hardware issues occurred during our training process.
 
 
 #### Online Search API
@@ -153,10 +159,18 @@ This project is released under [Apache licence](./LICENSE).
 ## Citation
 
 ```
+# DeepEyesV2
 @article{hong2025deepeyesv2,
   title={DeepEyesV2: Toward Agentic Multimodal Model},
-  author={Jack Hong, Chenxiao Zhao, ChengLin Zhu, Weiheng Lu, Guohai Xu and Xing Yu},
+  author={Hong, Jack and Zhao, Chenxiao and Zhu, ChengLin and Lu, Weiheng and Xu, Guohai and Yu, Xing},
   journal={arXiv preprint arXiv:2511.05271},
+  year={2025}
+}
+# DeepEyes
+@article{zheng2025deepeyes,
+  title={DeepEyes: Incentivizing" Thinking with Images" via Reinforcement Learning},
+  author={Zheng, Ziwei and Yang, Michael and Hong, Jack and Zhao, Chenxiao and Xu, Guohai and Yang, Le and Shen, Chao and Yu, Xing},
+  journal={arXiv preprint arXiv:2505.14362},
   year={2025}
 }
 ```
