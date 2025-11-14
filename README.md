@@ -91,11 +91,11 @@ bash scripts/install_deepeyes.sh
 #### Code Sandbox
 DeepEyesV2 can write code, execute it in a sandbox, and perform subsequent reasoning based on the execution results. Similar to o3, DeepEyesV2' code follows the Jupyter style. We receive DeepEyesV2's code via a server and return the execution results.
 
-You can follow this [repo](https://github.com/Visual-Agent/jupyter_sandbox) to deploy the code server. We utilize Redis to store the state of Jupyter Notebook, and you need to install Redis yourself.
+You can follow [this github repo](https://github.com/ChenShawn/MultiModal-Jupyter-Sandbox) to deploy the code server. To guarantee code execution safety, we recommend using docker virtualization to run the code sandbox. The docker image for the code sandbox can be found on [this dockerhub repo](https://hub.docker.com/repository/docker/chenshawn6915/multimodal-ipython-sandbox/general).
 
 During RL training, transmitting a large number of high-resolution images to a single node in a short period may saturate the bandwidth, leading to retransmissions and timeouts. Therefore, we recommend deploying multiple code servers to distribute network pressure and using high-performance machines to run the code servers, ensuring fast response. 
 
-In our practice, we deployed a large number of code server services on each GPU node separately, and you can refer to this [repo](https://github.com/Visual-Agent/jupyter_sandbox) for deployment. Through this approach, no timeouts caused by network, CPU, or other hardware issues occurred during our training process.
+In our practice, we deployed a large number of code server services on each GPU node separately, and each training process should only request the code server on its localhost machine. Through this approach, no timeouts caused by network, CPU, or other hardware issues occurred during our training process.
 
 
 #### Online Search API
