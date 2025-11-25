@@ -29,7 +29,7 @@ data/
 
 
 ### Cold Start Data
-You should firstly unzip the `images.zip` by using the following command.
+Please download the SFT data from [here](https://huggingface.co/datasets/honglyhly/DeepEyesV2_SFT). You should firstly unzip the `images.zip` by using the following command.
 
 ```bash
 cd sft
@@ -45,7 +45,7 @@ python ../cold_start/data_convert.py --input_path path_to_json_path --data_path 
 It is worth noting that we do not provide the multimodal CoT SFT data due to policy reasons.
 
 ### Search Cache
-
+Please download the search cache from [here](https://huggingface.co/datasets/honglyhly/DeepEyesV2_Search_Cache).
 You should firstly unzip the `train.zip`.
 
 ```bash
