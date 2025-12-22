@@ -509,7 +509,7 @@ def compute_score_acc(predict_str: str, ground_truth: str, extra_info=None, **kw
             client_idx = random.randint(0, len(client_list) - 1)
             client = client_list[client_idx]
             model_name = model_name_list[client_idx]
-            full_prompt = get_prompt(answer_text, ground_truth, question_text)
+            full_prompt = get_prompt(question_text, ground_truth, answer_text)
 
             acc_reward = 0.0
             for ix in range(32):
