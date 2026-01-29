@@ -13,6 +13,51 @@ from typing import Dict, Any
 import textwrap
 import autopep8
 
+import math
+
+# 新增：smart resize相关方法
+IMAGE_FACTOR = 28
+MIN_PIXELS = 4 * 28 * 28
+MAX_PIXELS = 16384 * 28 * 28
+
+def ceil_by_factor(number: int, factor: int) -> int:
+    """Returns the smallest integer greater than or equal to 'number' that is divisible by 'factor'."""
+    return math.ceil(number / factor) * factor
+
+def floor_by_factor(number: int, factor: int) -> int:
+    """Returns the largest integer less than or equal to 'number' that is divisible by 'factor'."""
+    return math.floor(number / factor) * factor
+
+def round_by_factor(number: int, factor: int) -> int:
+    """Returns the closest integer to 'number' that is divisible by 'factor'."""
+    return round(number / factor) * factor
+
+def smart_resize(
+    height: int, width: int, factor: int = IMAGE_FACTOR, min_pixels: int = MIN_PIXELS, max_pixels: int = MAX_PIXELS
+) -> tuple[int, int]:
+    h_bar = max(factor, round_by_factor(height, factor))
+    w_bar = max(factor, round_by_factor(width, factor))
+    if h_bar * w_bar > max_pixels:
+        beta = math.sqrt((height * width) / max_pixels)
+        h_bar = floor_by_factor(height / beta, factor)
+        w_bar = floor_by_factor(width / beta, factor)
+    elif h_bar * w_bar < min_pixels:
+        beta = math.sqrt(min_pixels / (height * width))
+        h_bar = ceil_by_factor(height * beta, factor)
+        w_bar = ceil_by_factor(width * beta, factor)
+    return h_bar, w_bar
+
+def maybe_resize_image_v2(image):
+    """
+    Qwen-VL raises an error for images with height or width less than 32 pixels.
+    """
+    height, width = image.height, image.width
+    new_height, new_width = smart_resize(height, width)
+    if new_height == height and new_width == width:
+        return image
+    new_image = image.resize((new_width, new_height), Image.BILINEAR)
+    return new_image
+
 
 def generate_session_id():
     salted_str = str(int(time.time())) + str(random.randint(10000, 99999))
@@ -133,7 +178,7 @@ def request_jupyter_execution(code_string, code_sandbox_url,session_id, code_tim
         for idx, img in enumerate(image_base64_list):
             try:
                 img_pil = base64_to_pil_image(img)
-                img_pil = maybe_resize_image(img_pil)
+                img_pil = maybe_resize_image_v2(img_pil)
                 image_pil_list.append(img_pil)
             except Exception as err:
                 print(f' [ERROR code] Failed to decode image {idx}: {err}')
@@ -406,6 +451,16 @@ if __name__ == "__main__":
             response = client.chat.completions.create(**params)
             response_message = response.choices[0].message.content
 
+            # add assistant response to messages
+            chat_message.append(
+                {
+                    "role": "assistant",
+                    "content": [
+                        {"type": "text", "text": response_message},
+                    ],
+                }
+            )
+
             todo_action = 'code'
             if '<code>' in response_message:
                 todo_action = 'code'
@@ -430,7 +485,7 @@ if __name__ == "__main__":
                 ).strip()
 
                 add_message = {
-                    "role": "assistant",
+                    "role": "user",
                     "content": [
                         {"type": "text", "text": code_result_string},
                     ],
@@ -455,7 +510,7 @@ if __name__ == "__main__":
                 except Exception as e:
                     error_msg = f"Invalid tool call format: {action.strip()}. Error: {e}"
                     add_message = {
-                        "role": "assistant",
+                        "role": "user",
                         "content": [
                             {"type": "text", "text": error_msg},
                         ],
@@ -471,7 +526,7 @@ if __name__ == "__main__":
                     if tool_name not in ['search', 'image_search']:
                         error_msg = f"Invalid tool call name: {action.strip()}."
                         add_message = {
-                            "role": "assistant",
+                            "role": "user",
                             "content": [
                                 {"type": "text", "text": error_msg},
                             ],
@@ -481,7 +536,7 @@ if __name__ == "__main__":
                     if tool_name == 'image_search' and args is not None:
                         error_msg = f"Invalid tool call parameters for image search: {action.strip()}."
                         add_message = {
-                            "role": "assistant",
+                            "role": "user",
                             "content": [
                                 {"type": "text", "text": error_msg},
                             ],
@@ -493,7 +548,7 @@ if __name__ == "__main__":
                     if not exec_ret or exec_ret['status'] != 'success':
                         error_msg = "Search error"
                         add_message = {
-                            "role": "assistant",
+                            "role": "user",
                             "content": [
                                 {"type": "text", "text": error_msg},
                             ],
@@ -509,7 +564,7 @@ if __name__ == "__main__":
 
                     if len(image_list) == 0:
                         add_message = {
-                            "role": "assistant",
+                            "role": "user",
                             "content": [
                                 {"type": "text", "text": code_result_string},
                             ],
@@ -518,7 +573,7 @@ if __name__ == "__main__":
                         for idx, img in enumerate(image_list):
                             img_base64 = base64.b64encode(img.tobytes()).decode('utf-8')
                             add_message = {
-                                "role": "assistant",
+                                "role": "user",
                                 "content": [
                                     {"type": "text", "text": search_result_string},
                                     {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{img_base64}"}}
@@ -529,7 +584,7 @@ if __name__ == "__main__":
                 except Exception as e:
                     error_msg = f"Tool call execution error: {str(e)}"
                     add_message = {
-                        "role": "assistant",
+                        "role": "user",
                         "content": [
                             {"type": "text", "text": error_msg},
                         ],
@@ -538,7 +593,7 @@ if __name__ == "__main__":
             else:
                 error_msg = f"Format Error."
                 add_message = {
-                    "role": "assistant",
+                    "role": "user",
                     "content": [
                         {"type": "text", "text": error_msg},
                     ],
